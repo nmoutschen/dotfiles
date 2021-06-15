@@ -7,7 +7,15 @@ mkdir "$HOME/bin"
 pip install -r requirements.txt
 
 # Install starship
-sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+install_starship () {
+    LATEST=$(curl https://api.github.com/repos/starship/starship/releases | jq '.[0].tag_name' --raw-output)
+    curl "https://github.com/starship/starship/releases/download/${LATEST}/starship-x86_64-unknown-linux-gnu.tar.gz" > starship.tar.gz
+    tar xvf starship.tar.gz
+    mv starship $HOME/bin/starship
+    rm starship.tar.gz
+}
+
+install_starship
 
 # Install terraform
 install_terraform () {
