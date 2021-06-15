@@ -2,12 +2,14 @@
 
 # Create binary folder
 mkdir "$HOME/bin"
-PATH = "$HOME/bin:$PATH"
 
 # Install Python modules
 pip install -r requirements.txt
 
-# Install binaries
+# Install starship
+sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+
+# Install terraform
 install_terraform () {
     LATEST=$(curl https://api.github.com/repos/hashicorp/terraform/releases | jq '.[0].tag_name' --raw-output)
     curl "https://releases.hashicorp.com/terraform/${LATEST:1}/terraform_${LATEST:1}_linux_amd64.zip" > terraform.zip
@@ -17,3 +19,24 @@ install_terraform () {
 }
 
 install_terraform
+
+# Install dotfiles
+
+dotfile () {
+    fname=$1
+
+    # Remove if it exists already
+    if [ -e "$HOME/$fname" ]; then
+        rm -rf "$HOME/$fname"
+    fi
+
+    # Create folder(s) if need be
+    if echo $fname | grep / 2>/dev/null; then
+        mkdir -p $(dirname "$HOME/$fname")
+    fi
+
+    ln -s "$(pwd)/$1" "$HOME/$1"
+}
+
+dotfile .bashrc
+dotfile .config/starship.toml

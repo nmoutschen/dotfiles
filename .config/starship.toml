@@ -1,0 +1,14 @@
+add_newline = false
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$terraform\
+$python\
+$golang\
+$character
+"""
+
+[directory]
+truncate_to_repo = false
