@@ -8,8 +8,7 @@ pip install -r requirements.txt
 
 # Install starship
 install_starship () {
-    LATEST=$(curl https://api.github.com/repos/starship/starship/releases | jq '.[0].tag_name' --raw-output)
-    curl "https://github.com/starship/starship/releases/download/${LATEST}/starship-x86_64-unknown-linux-gnu.tar.gz" > starship.tar.gz
+    curl --location "https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz" > starship.tar.gz
     tar xvf starship.tar.gz
     mv starship $HOME/bin/starship
     rm starship.tar.gz
@@ -20,7 +19,7 @@ install_starship
 # Install terraform
 install_terraform () {
     LATEST=$(curl https://api.github.com/repos/hashicorp/terraform/releases | jq '.[0].tag_name' --raw-output)
-    curl "https://releases.hashicorp.com/terraform/${LATEST:1}/terraform_${LATEST:1}_linux_amd64.zip" > terraform.zip
+    curl --location "https://releases.hashicorp.com/terraform/${LATEST:1}/terraform_${LATEST:1}_linux_amd64.zip" > terraform.zip
     unzip terraform.zip
     mv terraform $HOME/bin/terraform
     rm terraform.zip
