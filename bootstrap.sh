@@ -47,3 +47,10 @@ dotfile () {
 
 dotfile .bashrc
 dotfile .config/starship.toml
+
+# Setup AWS config
+# Only run this if the AWS_CONFIG variable is set
+if [ -n "$AWS_CONFIG" ]; then
+    mkdir -p "$HOME/.aws"
+    echo "$AWS_CONFIG" | ./scripts/json2ini.py > $HOME/.aws/config
+fi
